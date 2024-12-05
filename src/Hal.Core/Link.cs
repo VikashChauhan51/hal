@@ -1,5 +1,6 @@
 ﻿using Hal.Core.Converters;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Hal.Core;
 
@@ -18,6 +19,10 @@ public class Link
             Converters = new List<JsonConverter>()
             {
                 new LinkConverter()
+            },
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
             }
         };
 

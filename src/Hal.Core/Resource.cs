@@ -1,5 +1,6 @@
 ﻿using Hal.Core.Converters;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Hal.Core;
 
@@ -33,6 +34,10 @@ public class Resource : IResource
             {
                 new LinkConverter(),
                 new ResourceJsonConverter()
+            },
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
             }
         };
 

@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 namespace Hal.Core.Converters;
 
 
-public class ResourceJsonConverter : JsonConverter
+public class ResourceConverter : JsonConverter
 {
     public override bool CanConvert(Type objectType)
     {

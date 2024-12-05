@@ -12,7 +12,7 @@ public class Link
 
     public override string ToString()
     {
-        var jsonSerializerSettings = new JsonSerializerSettings
+        var jsonSerializerSettings = new HalJsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,

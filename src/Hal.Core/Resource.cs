@@ -26,14 +26,14 @@ public class Resource : IResource
 
     public override string ToString()
     {
-        var jsonSerializerSettings = new JsonSerializerSettings
+        var jsonSerializerSettings = new HalJsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,
             Converters = new List<JsonConverter>()
             {
                 new LinkConverter(),
-                new ResourceJsonConverter()
+                new ResourceConverter()
             },
             ContractResolver = new DefaultContractResolver
             {

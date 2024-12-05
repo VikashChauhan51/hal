@@ -46,6 +46,27 @@ public class HalLinkGenerator : IHalLinkGenerator
         return _linkGenerator.GetPathByAction(HttpContext!, actionName, controllerName, values);
     }
 
+
+    public bool IsRouteNameValid(string routeName)
+    {
+        return EndpointDataSource?
+            .Endpoints.
+            OfType<RouteEndpoint>()
+            .Any(e => e.RoutePattern?.RawText?.Contains(routeName, StringComparison.OrdinalIgnoreCase) ?? false) ?? false;
+    }
+    public bool IsActionAndControllerValid(string actionName, string controllerName)
+    {
+        return EndpointDataSource?
+            .Endpoints
+            .OfType<RouteEndpoint>()
+            .Any(e => e.RoutePattern.RequiredValues.TryGetValue("action", out var action) &&
+            action != null &&
+            action.ToString().Equals(actionName, StringComparison.OrdinalIgnoreCase) &&
+            e.RoutePattern.RequiredValues.TryGetValue("controller", out var controller) &&
+            controller != null &&
+            controller.ToString().Equals(controllerName, StringComparison.OrdinalIgnoreCase)) ?? false;
+    }
+
     private static string GetFormatedPath(string path)
     {
         if (path == null)
@@ -67,21 +88,5 @@ public class HalLinkGenerator : IHalLinkGenerator
 
         return path.ToLower();
     }
-    private bool IsRouteNameValid(string routeName)
-    {
-        return EndpointDataSource?
-            .Endpoints.
-            OfType<RouteEndpoint>()
-            .Any(e => e.RoutePattern.RawText.Contains(routeName, StringComparison.OrdinalIgnoreCase)) ?? false;
-    }
-    private bool IsActionAndControllerValid(string actionName, string controllerName)
-    {
-        return EndpointDataSource?
-            .Endpoints
-            .OfType<RouteEndpoint>()
-            .Any(e => e.RoutePattern.RequiredValues.TryGetValue("action", out var action) &&
-            action.ToString().Equals(actionName, StringComparison.OrdinalIgnoreCase) &&
-            e.RoutePattern.RequiredValues.TryGetValue("controller", out var controller) &&
-            controller.ToString().Equals(controllerName, StringComparison.OrdinalIgnoreCase)) ?? false;
-    }
+
 }

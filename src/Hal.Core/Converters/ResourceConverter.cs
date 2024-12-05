@@ -27,6 +27,11 @@ public class ResourceJsonConverter : JsonConverter
             json["data"] = JToken.FromObject(res.Data, serializer);
         }
 
+        if (resource.Embedded?.Count > 0)
+        {
+            json["_embedded"] = JToken.FromObject(resource.Embedded, serializer);
+        }
+
         if (resource is Resource<object, object> resMeta)
         {
             json["meta"] = JToken.FromObject(resMeta.Meta, serializer);

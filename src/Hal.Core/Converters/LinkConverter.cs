@@ -18,7 +18,7 @@ public class LinkConverter : JsonConverter
         var json = new JObject
         {
             [link.Rel] = link.Href,
-            ["method"] =link.Method.ToString(),
+            ["method"] = link.Method.ToString(),
         };
 
         json.WriteTo(writer);

@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hal.Core", "Hal.Core\Hal.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hal.AspDotNetCore", "Hal.AspDotNetCore\Hal.AspDotNetCore.csproj", "{B5A39FF3-2CC5-4DF9-A8B7-4BE63059202F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{684EB716-0479-4C32-95B4-F6216BF9E177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Api", "Samples\Sample.Api\Sample.Api.csproj", "{09DD07A8-612B-4B72-A7AF-FC0F67D0FB87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.MinimalApi", "Samples\Sample.MinimalApi\Sample.MinimalApi.csproj", "{1F64A8C7-2813-49EA-8C1A-84F319882A6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +27,20 @@ Global
 		{B5A39FF3-2CC5-4DF9-A8B7-4BE63059202F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5A39FF3-2CC5-4DF9-A8B7-4BE63059202F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5A39FF3-2CC5-4DF9-A8B7-4BE63059202F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09DD07A8-612B-4B72-A7AF-FC0F67D0FB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09DD07A8-612B-4B72-A7AF-FC0F67D0FB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09DD07A8-612B-4B72-A7AF-FC0F67D0FB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09DD07A8-612B-4B72-A7AF-FC0F67D0FB87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F64A8C7-2813-49EA-8C1A-84F319882A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F64A8C7-2813-49EA-8C1A-84F319882A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F64A8C7-2813-49EA-8C1A-84F319882A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F64A8C7-2813-49EA-8C1A-84F319882A6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{09DD07A8-612B-4B72-A7AF-FC0F67D0FB87} = {684EB716-0479-4C32-95B4-F6216BF9E177}
+		{1F64A8C7-2813-49EA-8C1A-84F319882A6B} = {684EB716-0479-4C32-95B4-F6216BF9E177}
 	EndGlobalSection
 EndGlobal

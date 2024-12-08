@@ -33,6 +33,17 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
 
+        var item =forecast.First();
+        var ddd = new Resource<WeatherForecast>(item);
+
+        ddd.AddLink(new Link
+        {
+            Href = linkGenerator.GenerateUri("GetWeatherForecast", new { }),
+            Rel = "self",
+            Method = HttpVerbs.Get
+        });
+
+
         IResourceCollection<WeatherForecast> response = new ResourceCollection<WeatherForecast>(forecast);
         response.AddLink(new Link
         {
@@ -41,6 +52,6 @@ public class WeatherForecastController : ControllerBase
             Method = HttpVerbs.Get
         });
 
-        return Ok(response);
+        return Ok(ddd);
     }
 }

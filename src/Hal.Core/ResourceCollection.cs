@@ -1,68 +1,27 @@
 ﻿using Hal.Core.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System.Collections;
 using System.Text.Json.Serialization;
 
 namespace Hal.Core;
-public class ResourceCollection<T> : Resource, IResourceCollection<T>, ICollection<T>
+public class ResourceCollection<TData> : Resource, IResourceCollection<TData>
 {
-    private readonly ICollection<T> _resourceCollection = new List<T>();
 
     [JsonPropertyName("data")]
     [JsonProperty("data")]
-    public IEnumerable<T> Data => _resourceCollection;
+    public IEnumerable<TData> Data { get; init; }
 
-    public int Count => _resourceCollection.Count;
+    [JsonPropertyName("_embedded")]
+    [JsonProperty("_embedded", NullValueHandling = NullValueHandling.Ignore)]
+    public IDictionary<string, dynamic> Embedded { get; init; } = new Dictionary<string, dynamic>();
 
-    public bool IsReadOnly => _resourceCollection.IsReadOnly;
-
-    public ResourceCollection(IEnumerable<T> data)
+    public ResourceCollection(IEnumerable<TData> data)
     {
-        foreach (var item in data ?? [])
-        {
-            _resourceCollection.Add(item);
-        }
+        Data = data;
     }
-
-    public ResourceCollection(ICollection<T> data)
+    public void AddEmbeddedResourceCollection<T>(string key, IEmbeddedResourceCollection<T> resource)
     {
-        _resourceCollection = data;
-    }
-
-    public void Add(T item)
-    {
-        _resourceCollection.Add(item);
-    }
-
-    public void Clear()
-    {
-        _resourceCollection.Clear();
-    }
-
-    public bool Contains(T item)
-    {
-        return _resourceCollection.Contains(item);
-    }
-
-    public void CopyTo(T[] array, int arrayIndex)
-    {
-        _resourceCollection.CopyTo(array, arrayIndex);
-    }
-
-    public bool Remove(T item)
-    {
-        return _resourceCollection.Remove(item);
-    }
-
-    public IEnumerator<T> GetEnumerator()
-    {
-        return _resourceCollection.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return _resourceCollection.GetEnumerator();
+        Embedded[key] = resource;
     }
 
     public override string ToString()
@@ -83,7 +42,7 @@ public class ResourceCollection<T> : Resource, IResourceCollection<T>, ICollecti
         };
 
         return JsonConvert.SerializeObject(this, jsonSerializerSettings);
-    }
+    } 
 }
 
 public class ResourceCollection<TData, TMeta> : ResourceCollection<TData>

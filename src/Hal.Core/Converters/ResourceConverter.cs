@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Hal.Core.Converters;
@@ -24,12 +23,12 @@ public class ResourceConverter : JsonConverter
 
         if (resource is Resource<object> res)
         {
-            json["data"] = JToken.FromObject(res.Data, serializer);
-        }
+            if (res.Embedded?.Count > 0)
+            {
+                json["_embedded"] = JToken.FromObject(res.Embedded, serializer);
+            }
 
-        if (resource.Embedded?.Count > 0)
-        {
-            json["_embedded"] = JToken.FromObject(resource.Embedded, serializer);
+            json["data"] = JToken.FromObject(res.Data, serializer);
         }
 
         if (resource is Resource<object, object> resMeta)
@@ -39,6 +38,11 @@ public class ResourceConverter : JsonConverter
 
         if (resource is ResourceCollection<object> resColl)
         {
+            if (resColl.Embedded?.Count > 0)
+            {
+                json["_embedded"] = JToken.FromObject(resColl.Embedded, serializer);
+            }
+
             json["data"] = JToken.FromObject(resColl.Data, serializer);
         }
 

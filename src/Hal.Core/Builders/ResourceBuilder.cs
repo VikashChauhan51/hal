@@ -1,7 +1,7 @@
 ﻿namespace Hal.Core.Builders;
 public class ResourceBuilder<T> : IResourceBuilder<T>
 {
-    private readonly Resource<T> _resource;
+    private readonly IResource<T> _resource;
 
     public ResourceBuilder(T data)
     {
@@ -19,13 +19,6 @@ public class ResourceBuilder<T> : IResourceBuilder<T>
         _resource.AddEmbeddedResource(rel, embeddedResource);
         return this;
     }
-
-    public IResourceBuilder<T> AddEmbeddedResourceCollection<TEmbedded>(string rel, IEmbeddedResource<IEnumerable<TEmbedded>> embeddedResourceCollection)
-    {
-        _resource.AddEmbeddedResourceCollection(rel, embeddedResourceCollection);
-        return this;
-    }
-
     public IResource<T> Build()
     {
         return _resource;

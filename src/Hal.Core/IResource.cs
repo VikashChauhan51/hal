@@ -1,5 +1,4 @@
-﻿
-namespace Hal.Core;
+﻿namespace Hal.Core;
 
 public interface IResource
 {
@@ -10,10 +9,10 @@ public interface IResource
 public interface IResource<out TData> : IResource
 {
     TData Data { get; }
+    void AddEmbeddedResource<T>(string key, IEmbeddedResource<T> resource);
 }
 
-public interface IResourceMeta<out TData, out TMeta> : IResource<TData>
+public interface IResource<out TData, out TMeta> : IResource<TData>
 {
     TMeta Meta { get; }
-    void AddEmbeddedResource<T>(string key, IEmbeddedResource<T> resource);
 }

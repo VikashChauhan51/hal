@@ -1,11 +1,11 @@
 using Hal.AspDotNetCore;
 using Hal.Core;
+using Hal.Core.Builders;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace Sample.Api.Controllers;
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[Action]")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
@@ -25,7 +25,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public IActionResult Get()
     {
-        var forecast= Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        var forecast = Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
             TemperatureC = Random.Shared.Next(-20, 55),
@@ -33,25 +33,33 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
 
-        var item =forecast.First();
-        var ddd = new Resource<WeatherForecast>(item);
 
-        ddd.AddLink(new Link
+        var response = new ResourceCollectionBuilder<WeatherForecast>(forecast)
+            .AddLink("self", linkGenerator.GenerateUri("GetLowest", new { }), HttpVerbs.Get)
+            .AddLink("all", linkGenerator.GenerateUri("GetWeatherForecast", new { }), HttpVerbs.Get)
+            .Build();
+
+        return Ok(response);
+    }
+
+    [HttpGet(Name = "GetLowest")]
+    public IActionResult GetLowest()
+    {
+        var forecast = Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
-            Href = linkGenerator.GenerateUri("GetWeatherForecast", new { }),
-            Rel = "self",
-            Method = HttpVerbs.Get
-        });
+            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        })
+        .ToArray();
 
+        var item = forecast.MinBy(x =>x.TemperatureF);
 
-        IResourceCollection<WeatherForecast> response = new ResourceCollection<WeatherForecast>(forecast);
-        response.AddLink(new Link
-        {
-            Href = linkGenerator.GenerateUri("GetWeatherForecast", new { }),
-            Rel = "self",
-            Method = HttpVerbs.Get
-        });
+        var response = new ResourceBuilder<WeatherForecast>(item)
+            .AddLink("self", linkGenerator.GenerateUri("GetLowest", new { }), HttpVerbs.Get)
+            .AddLink("all", linkGenerator.GenerateUri("GetWeatherForecast", new { }), HttpVerbs.Get)
+            .Build();
 
-        return Ok(ddd);
+        return Ok(response);
     }
 }

@@ -1,29 +1,29 @@
 ﻿namespace Hal.Core.Builders;
-public class LinkBuilder
+public class LinkBuilder : ILinkBuilder
 {
     private string? _href;
     private string? _rel;
     private HttpVerbs _method;
 
-    public LinkBuilder SetHref(string href)
+    public ILinkBuilder SetHref(string href)
     {
         _href = href;
         return this;
     }
 
-    public LinkBuilder SetRel(string rel)
+    public ILinkBuilder SetRel(string rel)
     {
         _rel = rel;
         return this;
     }
 
-    public LinkBuilder SetMethod(HttpVerbs method)
+    public ILinkBuilder SetMethod(HttpVerbs method)
     {
         _method = method;
         return this;
     }
 
-    public Link Build()
+    public ILink Build()
     {
         ArgumentNullException.ThrowIfNull(_href);
         ArgumentNullException.ThrowIfNull(_rel);

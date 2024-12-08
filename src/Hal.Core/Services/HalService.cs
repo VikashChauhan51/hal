@@ -21,12 +21,12 @@ public class HalService : IHalService
         resource.AddLink(new Link { Href = href, Rel = rel, Method = method });
     }
 
-    public void AddEmbeddedResource<T, TEmbedded>(IResourceMeta<T, TEmbedded> resource, string key, IEmbeddedResource<TEmbedded> embeddedResource)
+    public void AddEmbeddedResource<T, TEmbedded>(IResource<T, TEmbedded> resource, string key, IEmbeddedResource<TEmbedded> embeddedResource)
     {
         resource.AddEmbeddedResource(key, embeddedResource);
     }
 
-    public void AddEmbeddedResourceCollection<T, TEmbedded>(IResourceCollectionMeta<T, TEmbedded> resource, string key, IEmbeddedResource<IEnumerable<TEmbedded>> embeddedResourceCollection)
+    public void AddEmbeddedResourceCollection<T, TEmbedded>(IResourceCollection<T, TEmbedded> resource, string key, IEmbeddedResourceCollection<TEmbedded> embeddedResourceCollection)
     {
         resource.AddEmbeddedResourceCollection(key, embeddedResourceCollection);
     }

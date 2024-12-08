@@ -55,8 +55,18 @@ public class WeatherForecastController : ControllerBase
 
 
         var response = new ResourceCollectionBuilder<WeatherForecast, string>(forecast, "meta")
-            .AddLink("self", linkGenerator.GenerateUri("GetWeatherForecastWithMeta", new { }), HttpVerbs.Get)
-            .AddLink("all", linkGenerator.GenerateUri("GetWeatherForecast", new { }), HttpVerbs.Get)
+            .AddLink(linkBuilder =>
+            linkBuilder
+            .SetRel("self")
+            .SetMethod(HttpVerbs.Get)
+            .SetHref(linkGenerator.GenerateUri("GetWeatherForecastWithMeta", new { }))
+            .Build())
+            .AddLink(linkBuilder =>
+            linkBuilder
+            .SetRel("all")
+            .SetMethod(HttpVerbs.Get)
+            .SetHref(linkGenerator.GenerateUri("GetWeatherForecast", new { }))
+            .Build())
             .Build();
 
         return Ok(response);

@@ -16,6 +16,7 @@ public static class HalAspNetCoreExtensions
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.Formatting = Formatting.None;
             settings.Converters.Add(new LinkConverter());
+            settings.Converters.Add(new HttpVerbsConverter());
             settings.Converters.Add(new ResourceConverter());
             settings.ContractResolver = new DefaultContractResolver
             {

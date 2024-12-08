@@ -1,6 +1,7 @@
 ﻿using Hal.Core.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Hal.Core;
 
@@ -18,7 +19,8 @@ public class Link : ILink
             Formatting = Formatting.Indented,
             Converters =
             [
-                new LinkConverter()
+                new LinkConverter(),
+                new HttpVerbsConverter()
             ],
             ContractResolver = new DefaultContractResolver
             {

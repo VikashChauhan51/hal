@@ -1,4 +1,5 @@
-﻿namespace Hal.Core.Builders;
+﻿
+namespace Hal.Core.Builders;
 public class ResourceBuilder<TData> : IResourceBuilder<TData>
 {
     private readonly IResource<TData> _resource;
@@ -11,6 +12,13 @@ public class ResourceBuilder<TData> : IResourceBuilder<TData>
     public IResourceBuilder<TData> AddLink(string rel, string href, HttpVerbs method)
     {
         _resource.AddLink(new Link { Href = href, Rel = rel, Method = method });
+        return this;
+    }
+    public IResourceBuilder<TData> AddLink(Func<ILinkBuilder, ILink> link)
+    {
+        var linkBuilder = new LinkBuilder();
+        var constructedLink = link(linkBuilder);
+        _resource.AddLink(constructedLink);
         return this;
     }
 
@@ -40,6 +48,15 @@ public class ResourceBuilder<TData, TMeta> : IResourceBuilder<TData, TMeta>
         _resource.AddLink(new Link { Href = href, Rel = rel, Method = method });
         return this;
     }
+
+    public IResourceBuilder<TData, TMeta> AddLink(Func<ILinkBuilder, ILink> link)
+    {
+        var linkBuilder = new LinkBuilder();
+        var constructedLink = link(linkBuilder);
+        _resource.AddLink(constructedLink);
+        return this;
+    }
+
     public IResourceBuilder<TData, TMeta> AddEmbeddedResource<TEmbedded>(string rel, IEmbeddedResource<TEmbedded> embeddedResource)
     {
         _resource.AddEmbeddedResource(rel, embeddedResource);

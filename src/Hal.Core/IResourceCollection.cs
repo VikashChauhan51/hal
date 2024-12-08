@@ -1,5 +1,12 @@
 ﻿namespace Hal.Core;
-public interface IResourceCollection<out T>
+public interface IResourceCollection<out TData> : IResource
 {
-    IEnumerable<T> Data { get;}
+    IEnumerable<TData> Data { get; }
+}
+
+
+public interface IResourceCollection<out TData, out TMeta> : IResource<TData>
+{
+    IEnumerable<TMeta> Meta { get; }
+    void AddEmbeddedResourceCollection<T>(string key, IEmbeddedResource<IEnumerable<T>> resource);
 }

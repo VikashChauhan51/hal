@@ -11,7 +11,6 @@ public static class HalAspNetCoreExtensions
 
     public static IServiceCollection AddHalSupport(this IServiceCollection serviceCollection)
     {
-
         serviceCollection.Configure<HalJsonSerializerSettings>(settings =>
         {
             settings.NullValueHandling = NullValueHandling.Ignore;
@@ -23,6 +22,7 @@ public static class HalAspNetCoreExtensions
                 NamingStrategy = new CamelCaseNamingStrategy()
             };
         });
+        serviceCollection.AddHttpContextAccessor();
         serviceCollection.AddScoped<IHalService, HalService>();
         serviceCollection.AddScoped<IHalLinkGenerator, HalLinkGenerator>();
         return serviceCollection;

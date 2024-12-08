@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Hal.Core;
 
-public class Link
+public class Link : ILink
 {
     public required string Href { get; init; }
     public required string Rel { get; init; }
@@ -16,16 +16,16 @@ public class Link
         {
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,
-            Converters = new List<JsonConverter>()
-            {
+            Converters =
+            [
                 new LinkConverter()
-            },
+            ],
             ContractResolver = new DefaultContractResolver
             {
                 NamingStrategy = new CamelCaseNamingStrategy()
             }
         };
 
-        return  JsonConvert.SerializeObject(this, jsonSerializerSettings);
+        return JsonConvert.SerializeObject(this, jsonSerializerSettings);
     }
 }

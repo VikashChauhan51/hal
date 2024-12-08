@@ -46,6 +46,16 @@ public class HalLinkGenerator : IHalLinkGenerator
         return _linkGenerator.GetPathByAction(HttpContext!, actionName, controllerName, values);
     }
 
+    public string? GenerateUri(string routeName, object values)
+    {
+        return _linkGenerator.GetUriByName(HttpContext!, routeName, values);
+    }
+
+    public string? GenerateUriForAction(string actionName, string controllerName, object values)
+    {
+        return _linkGenerator.GetUriByAction(HttpContext!, actionName, controllerName, values);
+    }
+
 
     public bool IsRouteNameValid(string routeName)
     {

@@ -3,14 +3,18 @@ namespace Hal.Core;
 
 public interface IResource
 {
-    ISet<Link> Links { get;}
+    ISet<ILink> Links { get; }
 
-    void AddLink(Link link);
-    void AddEmbeddedResource<T>(string key, IEmbeddedResource<T> resource);
-    void AddEmbeddedResourceCollection<T>(string key, IEmbeddedResource<IEnumerable<T>> resource);
+    void AddLink(ILink link);
 }
 
-public interface IResource<out T>
+public interface IResource<out TData> : IResource
 {
-    T Data { get;}
+    TData Data { get; }
+}
+
+public interface IResourceMeta<out TData, out TMeta> : IResource<TData>
+{
+    TMeta Meta { get; }
+    void AddEmbeddedResource<T>(string key, IEmbeddedResource<T> resource);
 }

@@ -1,12 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace Hal.Core;
-public class EmbeddedResourceCollection<T> : IEmbeddedResourceCollection<T>, ICollection<T>
+public class EmbeddedResourceCollection<T> : ICollection<T>
 {
     private readonly ICollection<T> _embeddedResources = new List<T>();
 
     [JsonProperty("_embedded")]
+    [JsonPropertyName("_embedded")]
     public IEnumerable<T> Embedded => _embeddedResources;
 
     public int Count => _embeddedResources.Count;
@@ -15,7 +17,7 @@ public class EmbeddedResourceCollection<T> : IEmbeddedResourceCollection<T>, ICo
 
     public EmbeddedResourceCollection(IEnumerable<T> embedded)
     {
-        foreach (var embeddedResource in embedded)
+        foreach (var embeddedResource in embedded ?? [])
         {
             _embeddedResources.Add(embeddedResource);
         }

@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿using Hal.Core.Converters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace Hal.Core;
 public class ResourceCollection<T> : Resource, IResourceCollection<T>, ICollection<T>
 {
     private readonly ICollection<T> _resourceCollection = new List<T>();
+
+    [JsonPropertyName("data")]
+    [JsonProperty("data")]
     public IEnumerable<T> Data => _resourceCollection;
 
     public int Count => _resourceCollection.Count;
@@ -12,7 +19,7 @@ public class ResourceCollection<T> : Resource, IResourceCollection<T>, ICollecti
 
     public ResourceCollection(IEnumerable<T> data)
     {
-        foreach (var item in data)
+        foreach (var item in data ?? [])
         {
             _resourceCollection.Add(item);
         }
@@ -57,13 +64,55 @@ public class ResourceCollection<T> : Resource, IResourceCollection<T>, ICollecti
     {
         return _resourceCollection.GetEnumerator();
     }
+
+    public override string ToString()
+    {
+        var jsonSerializerSettings = new HalJsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented,
+            Converters =
+            [
+                new LinkConverter(),
+                new ResourceConverter()
+            ],
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            }
+        };
+
+        return JsonConvert.SerializeObject(this, jsonSerializerSettings);
+    }
 }
 
 public class ResourceCollection<TData, TMeta> : ResourceCollection<TData>
 {
+    [JsonPropertyName("meta")]
+    [JsonProperty("meta")]
     public TMeta Meta { get; init; }
     public ResourceCollection(IEnumerable<TData> data, TMeta meta) : base(data)
     {
         Meta = meta;
+    }
+
+    public override string ToString()
+    {
+        var jsonSerializerSettings = new HalJsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented,
+            Converters =
+            [
+                new LinkConverter(),
+                new ResourceConverter()
+            ],
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            }
+        };
+
+        return JsonConvert.SerializeObject(this, jsonSerializerSettings);
     }
 }

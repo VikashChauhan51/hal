@@ -42,10 +42,10 @@ public class ResourceCollection<TData> : Resource, IResourceCollection<TData>
         };
 
         return JsonConvert.SerializeObject(this, jsonSerializerSettings);
-    } 
+    }
 }
 
-public class ResourceCollection<TData, TMeta> : ResourceCollection<TData>
+public class ResourceCollection<TData, TMeta> : ResourceCollection<TData>, IResourceCollection<TData, TMeta>
 {
     [JsonPropertyName("meta")]
     [JsonProperty("meta")]

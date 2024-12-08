@@ -8,5 +8,5 @@ public interface IResourceCollection<out TData> :IResource
 
 public interface IResourceCollection<out TData, out TMeta> : IResourceCollection<TData>
 {
-    IEnumerable<TMeta> Meta { get; }  
+    TMeta Meta { get; }  
 }

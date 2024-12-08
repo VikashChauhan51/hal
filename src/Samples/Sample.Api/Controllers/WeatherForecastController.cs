@@ -35,7 +35,27 @@ public class WeatherForecastController : ControllerBase
 
 
         var response = new ResourceCollectionBuilder<WeatherForecast>(forecast)
-            .AddLink("self", linkGenerator.GenerateUri("GetLowest", new { }), HttpVerbs.Get)
+            .AddLink("get", linkGenerator.GenerateUri("GetLowest", new { }), HttpVerbs.Get)
+            .AddLink("self", linkGenerator.GenerateUri("GetWeatherForecast", new { }), HttpVerbs.Get)
+            .Build();
+
+        return Ok(response);
+    }
+
+    [HttpGet(Name = "GetWeatherForecastWithMeta")]
+    public IActionResult GetWithMeta()
+    {
+        var forecast = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        {
+            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        })
+        .ToArray();
+
+
+        var response = new ResourceCollectionBuilder<WeatherForecast, string>(forecast, "meta")
+            .AddLink("self", linkGenerator.GenerateUri("GetWeatherForecastWithMeta", new { }), HttpVerbs.Get)
             .AddLink("all", linkGenerator.GenerateUri("GetWeatherForecast", new { }), HttpVerbs.Get)
             .Build();
 
@@ -53,7 +73,7 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
 
-        var item = forecast.MinBy(x =>x.TemperatureF);
+        var item = forecast.MinBy(x => x.TemperatureF);
 
         var response = new ResourceBuilder<WeatherForecast>(item)
             .AddLink("self", linkGenerator.GenerateUri("GetLowest", new { }), HttpVerbs.Get)

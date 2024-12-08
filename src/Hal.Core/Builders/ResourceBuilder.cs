@@ -1,27 +1,53 @@
 ﻿namespace Hal.Core.Builders;
-public class ResourceBuilder<T> : IResourceBuilder<T>
+public class ResourceBuilder<TData> : IResourceBuilder<TData>
 {
-    private readonly IResource<T> _resource;
+    private readonly IResource<TData> _resource;
 
-    public ResourceBuilder(T data)
+    public ResourceBuilder(TData data)
     {
-        _resource = new Resource<T>(data);
+        _resource = new Resource<TData>(data);
     }
 
-    public IResourceBuilder<T> AddLink(string rel, string href, HttpVerbs method)
+    public IResourceBuilder<TData> AddLink(string rel, string href, HttpVerbs method)
     {
         _resource.AddLink(new Link { Href = href, Rel = rel, Method = method });
         return this;
     }
 
-    public IResourceBuilder<T> AddEmbeddedResource<TEmbedded>(string rel, IEmbeddedResource<TEmbedded> embeddedResource)
+    public IResourceBuilder<TData> AddEmbeddedResource<TEmbedded>(string rel, IEmbeddedResource<TEmbedded> embeddedResource)
     {
         _resource.AddEmbeddedResource(rel, embeddedResource);
         return this;
     }
-    public IResource<T> Build()
+    public IResource<TData> Build()
     {
         return _resource;
     }
 }
 
+
+public class ResourceBuilder<TData, TMeta> : IResourceBuilder<TData, TMeta>
+{
+    private readonly IResource<TData, TMeta> _resource;
+
+    public ResourceBuilder(TData data, TMeta meta)
+    {
+        _resource = new Resource<TData, TMeta>(data, meta);
+    }
+
+    public IResourceBuilder<TData, TMeta> AddLink(string rel, string href, HttpVerbs method)
+    {
+        _resource.AddLink(new Link { Href = href, Rel = rel, Method = method });
+        return this;
+    }
+    public IResourceBuilder<TData, TMeta> AddEmbeddedResource<TEmbedded>(string rel, IEmbeddedResource<TEmbedded> embeddedResource)
+    {
+        _resource.AddEmbeddedResource(rel, embeddedResource);
+        return this;
+    }
+
+    public IResource<TData, TMeta> Build()
+    {
+        return _resource;
+    }
+}

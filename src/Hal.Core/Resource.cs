@@ -76,7 +76,7 @@ public class Resource<TData> : Resource, IResource<TData>
     }
 }
 
-public class Resource<TData, TMeta> : Resource<TData>
+public class Resource<TData, TMeta> : Resource<TData>, IResource<TData, TMeta>
 {
     [JsonPropertyName("meta")]
     [JsonProperty("meta")]

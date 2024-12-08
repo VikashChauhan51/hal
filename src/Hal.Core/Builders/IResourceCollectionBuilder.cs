@@ -1,7 +1,14 @@
 ﻿namespace Hal.Core.Builders;
-public interface IResourceCollectionBuilder<T>
+public interface IResourceCollectionBuilder<TData>
 {
-    IResourceCollectionBuilder<T> AddLink(string rel, string href, HttpVerbs method);
-    IResourceCollectionBuilder<T> AddEmbeddedResourceCollection<TEmbedded>(string rel, IEmbeddedResourceCollection<TEmbedded> embeddedResourceCollection);
-    IResourceCollection<T> Build();
+    IResourceCollectionBuilder<TData> AddLink(string rel, string href, HttpVerbs method);
+    IResourceCollectionBuilder<TData> AddEmbeddedResourceCollection<TEmbedded>(string rel, IEmbeddedResourceCollection<TEmbedded> embeddedResourceCollection);
+    IResourceCollection<TData> Build();
+}
+
+public interface IResourceCollectionBuilder<TData, TMeta>
+{
+    IResourceCollectionBuilder<TData, TMeta> AddLink(string rel, string href, HttpVerbs method);
+    IResourceCollectionBuilder<TData, TMeta> AddEmbeddedResourceCollection<TEmbedded>(string rel, IEmbeddedResourceCollection<TEmbedded> embeddedResourceCollection);
+    IResourceCollection<TData, TMeta> Build();
 }

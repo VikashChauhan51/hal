@@ -4,7 +4,6 @@ namespace Hal.Core;
 public interface IResource
 {
     ISet<ILink> Links { get; }
-
     void AddLink(ILink link);
 }
 

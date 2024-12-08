@@ -22,6 +22,11 @@ public class ResourceCollectionBuilder<TData> : IResourceCollectionBuilder<TData
         return this;
     }
 
+    public IResourceCollectionBuilder<TData> AddLink(ILink link)
+    {
+        _resourceCollection.AddLink(link);
+        return this;
+    }
     public IResourceCollectionBuilder<TData> AddEmbeddedResourceCollection<TEmbedded>(string rel, IEmbeddedResourceCollection<TEmbedded> embeddedResourceCollection)
     {
         _resourceCollection.AddEmbeddedResourceCollection(rel, embeddedResourceCollection);
@@ -55,6 +60,12 @@ public class ResourceCollectionBuilder<TData, TMeta> : IResourceCollectionBuilde
         var linkBuilder = new LinkBuilder();
         var constructedLink = link(linkBuilder);
         _resourceCollection.AddLink(constructedLink);
+        return this;
+    }
+
+    public IResourceCollectionBuilder<TData, TMeta> AddLink(ILink link)
+    {
+        _resourceCollection.AddLink(link);
         return this;
     }
 

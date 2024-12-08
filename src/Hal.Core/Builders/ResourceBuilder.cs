@@ -22,6 +22,11 @@ public class ResourceBuilder<TData> : IResourceBuilder<TData>
         return this;
     }
 
+    public IResourceBuilder<TData> AddLink(ILink link)
+    {
+        _resource.AddLink(link);
+        return this;
+    }
     public IResourceBuilder<TData> AddEmbeddedResource<TEmbedded>(string rel, IEmbeddedResource<TEmbedded> embeddedResource)
     {
         _resource.AddEmbeddedResource(rel, embeddedResource);
@@ -30,7 +35,7 @@ public class ResourceBuilder<TData> : IResourceBuilder<TData>
     public IResource<TData> Build()
     {
         return _resource;
-    }
+    }  
 }
 
 
@@ -57,6 +62,11 @@ public class ResourceBuilder<TData, TMeta> : IResourceBuilder<TData, TMeta>
         return this;
     }
 
+    public IResourceBuilder<TData, TMeta> AddLink(ILink link)
+    {
+        _resource.AddLink(link);
+        return this;
+    }
     public IResourceBuilder<TData, TMeta> AddEmbeddedResource<TEmbedded>(string rel, IEmbeddedResource<TEmbedded> embeddedResource)
     {
         _resource.AddEmbeddedResource(rel, embeddedResource);

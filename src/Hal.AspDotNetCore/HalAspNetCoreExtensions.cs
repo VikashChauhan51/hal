@@ -26,6 +26,7 @@ public static class HalAspNetCoreExtensions
         serviceCollection.AddHttpContextAccessor();
         serviceCollection.AddScoped<IHalService, HalService>();
         serviceCollection.AddScoped<IHalLinkGenerator, HalLinkGenerator>();
+        serviceCollection.AddScoped<ISmartLinkBuilder, SmartLinkBuilder>();
         return serviceCollection;
     }
 }

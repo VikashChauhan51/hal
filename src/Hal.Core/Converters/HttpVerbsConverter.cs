@@ -7,39 +7,15 @@ public class HttpVerbsConverter : JsonConverter<HttpVerbs>
 
     public override HttpVerbs ReadJson(JsonReader reader, Type objectType, HttpVerbs existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        string? value = reader?.Value?.ToString();
+        var enumString = reader.Value?.ToString();
+        if (string.IsNullOrEmpty(enumString))
+            throw new JsonException($"Unable to convert '{enumString}' to {typeof(HttpVerbs).Name}.");
 
-        return value switch
-        {
-            "GET" => HttpVerbs.Get,
-            "POST" => HttpVerbs.Post,
-            "PUT" => HttpVerbs.Put,
-            "DELETE" => HttpVerbs.Delete,
-            "PATCH" => HttpVerbs.Patch,
-            "HEAD" => HttpVerbs.Head,
-            "OPTIONS" => HttpVerbs.Options,
-            "TRACE" => HttpVerbs.Trace,
-            "CONNECT" => HttpVerbs.Connect,
-            _ => throw new JsonException($"Unknown HttpVerbs value: {value}")
-        };
+        return Enum.Parse<HttpVerbs>(enumString, true);
     }
 
     public override void WriteJson(JsonWriter writer, HttpVerbs value, JsonSerializer serializer)
     {
-        string stringValue = value switch
-        {
-            HttpVerbs.Get => "GET",
-            HttpVerbs.Post => "POST",
-            HttpVerbs.Put => "PUT",
-            HttpVerbs.Delete => "DELETE",
-            HttpVerbs.Patch => "PATCH",
-            HttpVerbs.Head => "HEAD",
-            HttpVerbs.Options => "OPTIONS",
-            HttpVerbs.Trace => "TRACE",
-            HttpVerbs.Connect => "CONNECT",
-            _ => throw new JsonException($"Unknown HttpVerbs enum value: {value}")
-        };
-
-        writer.WriteValue(stringValue);
+        writer.WriteValue(value.ToString());
     }
 }

@@ -1,5 +1,6 @@
 using Hal.AspDotNetCore;
 using Hal.Core;
+using Hal.Core.Builders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,7 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", (IHalLinkGenerator linkGenerator) =>
+app.MapGet("/weatherforecast", (ISmartLinkBuilder linkGenerator) =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
@@ -35,13 +36,11 @@ app.MapGet("/weatherforecast", (IHalLinkGenerator linkGenerator) =>
             summaries[Random.Shared.Next(summaries.Length)]
         ))
         .ToArray();
-    IResourceCollection<WeatherForecast> response = new ResourceCollection<WeatherForecast>(forecast);
-    response.AddLink(new Link
-    {
-        Href = linkGenerator.GenerateUri("GetWeatherForecast", new { }),
-        Rel = "self",
-        Method = HttpVerbs.Get
-    });
+    var response = new ResourceCollectionBuilder<WeatherForecast, string>(forecast, "meta")
+            .AddLink(linkGenerator
+            .SetRouteName("GetWeatherForecast")
+            .Build())
+            .Build();
 
     return Results.Ok(response);
 })

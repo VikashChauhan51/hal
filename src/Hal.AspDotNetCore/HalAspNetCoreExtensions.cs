@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Hal.AspDotNetCore;
+
 public static class HalAspNetCoreExtensions
 {
 

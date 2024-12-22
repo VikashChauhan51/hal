@@ -1,4 +1,5 @@
 ﻿namespace Hal.Core;
+
 public enum HttpVerbs : byte
 {
     Get = 1,

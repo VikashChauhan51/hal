@@ -4,13 +4,13 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<VersionPrefix>1.0.0</VersionPrefix>
-		<PackageId>Hal.AspNetCore</PackageId>
-		<Title>Hal.AspNetCore</Title>
+		<PackageId>VHal.AspNetCore</PackageId>
+		<Title>VHal.AspNetCore</Title>
 		<Authors>Vikash Chauhan</Authors>
 		<Summary>ASP.NET Core extensions for implementing Hypertext Application Language (HAL) in web APIs.</Summary>
 		<Copyright>Copyright (c) Vikash Chauhan. All rights reserved.</Copyright>
 		<Description>
-			Hal.AspNetCore provides ASP.NET Core extensions for implementing Hypertext Application Language (HAL) in web APIs.
+			VHal.AspNetCore provides ASP.NET Core extensions for implementing Hypertext Application Language (HAL) in web APIs.
 			It includes:
 			- ASP.NET Core Integration for creating HAL resources.
 			- Request Handling within the HAL framework.

@@ -42,9 +42,9 @@ var response = new ResourceCollectionBuilder<WeatherForecast, string>(forecast, 
 
 ---
 
-# Hal.AspNetCore
+# VHal.AspNetCore
 
-Hal.AspNetCore provides ASP.NET Core extensions for implementing Hypertext Application Language (HAL) in web APIs. This package integrates seamlessly with Hal.Core to offer a comprehensive solution for HAL-compliant API development.
+VHal.AspNetCore provides ASP.NET Core extensions for implementing Hypertext Application Language (HAL) in web APIs. This package integrates seamlessly with Hal.Core to offer a comprehensive solution for HAL-compliant API development.
 
 ## Features
 
@@ -57,15 +57,15 @@ Hal.AspNetCore provides ASP.NET Core extensions for implementing Hypertext Appli
 Install the package via NuGet:
 
 ```bash
-dotnet add package Hal.AspNetCore
+dotnet add package VHal.AspNetCore
 ```
 
 ## Usage
 
-Here's how to use Hal.AspNetCore in your ASP.NET Core application:
+Here's how to use VHal.AspNetCore in your ASP.NET Core application:
 
 ```csharp
-using Hal.AspNetCore;
+using VHal.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]

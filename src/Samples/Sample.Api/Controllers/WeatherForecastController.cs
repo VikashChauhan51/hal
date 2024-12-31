@@ -35,8 +35,8 @@ public class WeatherForecastController : ControllerBase
 
 
         var response = new ResourceCollectionBuilder<WeatherForecast>(forecast)
-            .AddLink("get", linkGenerator.GenerateUri("GetLowest", new { }), HttpVerbs.Get)
-            .AddLink("self", linkGenerator.GenerateUri("GetWeatherForecast", new { }), HttpVerbs.Get)
+            .AddLink("get", linkGenerator.GenerateLink("GetLowest", new { }), HttpVerbs.Get)
+            .AddLink("self", linkGenerator.GenerateLink("GetWeatherForecast", new { }), HttpVerbs.Get)
             .Build();
 
         return Ok(response);
@@ -59,13 +59,13 @@ public class WeatherForecastController : ControllerBase
             linkBuilder
             .SetRel("self")
             .SetMethod(HttpVerbs.Get)
-            .SetHref(linkGenerator.GenerateUri("GetWeatherForecastWithMeta", new { }))
+            .SetHref(linkGenerator.GenerateLink("GetWeatherForecastWithMeta", new { }))
             .Build())
             .AddLink(linkBuilder =>
             linkBuilder
             .SetRel("all")
             .SetMethod(HttpVerbs.Get)
-            .SetHref(linkGenerator.GenerateUri("GetWeatherForecast", new { }))
+            .SetHref(linkGenerator.GenerateLink("GetWeatherForecast", new { }))
             .Build())
             .Build();
 
@@ -86,8 +86,8 @@ public class WeatherForecastController : ControllerBase
         var item = forecast.MinBy(x => x.TemperatureF);
 
         var response = new ResourceBuilder<WeatherForecast>(item)
-            .AddLink("self", linkGenerator.GenerateUri("GetLowest", new { }), HttpVerbs.Get)
-            .AddLink("all", linkGenerator.GenerateUri("GetWeatherForecast", new { }), HttpVerbs.Get)
+            .AddLink("self", linkGenerator.GenerateLink("GetLowest", new { }), HttpVerbs.Get)
+            .AddLink("all", linkGenerator.GenerateLink("GetWeatherForecast", new { }), HttpVerbs.Get)
             .Build();
 
         return Ok(response);

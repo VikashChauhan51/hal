@@ -64,11 +64,11 @@ public class SmartLinkBuilder : ISmartLinkBuilder
 
         if (!string.IsNullOrEmpty(_routeName))
         {
-            href = _halLinkGenerator.GenerateUri(_routeName, _routeValues ?? new { });
+            href = _halLinkGenerator.GenerateLink(_routeName, _routeValues ?? new { });
         }
         else if (!string.IsNullOrEmpty(_actionName) && !string.IsNullOrEmpty(_controllerName))
         {
-            href = _halLinkGenerator.GenerateUriForAction(_actionName, _controllerName, _routeValues ?? new { });
+            href = _halLinkGenerator.GenerateLinkForAction(_actionName, _controllerName, _routeValues ?? new { });
         }
 
         if (string.IsNullOrEmpty(href))

@@ -1,35 +1,19 @@
-﻿using Hal.Core.Converters;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿namespace Hal.Core;
 
-namespace Hal.Core;
-
+/// <summary>
+/// Represents a hypermedia link with a target URI, relationship type, and HTTP method.
+/// </summary>
+/// <remarks>Use this class to describe links in RESTful APIs, such as those included in resource representations
+/// for HATEOAS (Hypermedia as the Engine of Application State) scenarios. Each instance specifies the link's target,
+/// its relation to the current resource, and the HTTP method to use when following the link.</remarks>
 public class Link : ILink
 {
+    /// <inheritdoc/>
     public required string Href { get; init; }
+
+    /// <inheritdoc/>
     public required string Rel { get; init; }
 
-    [JsonConverter(typeof(HttpVerbsConverter))]
-    [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+    /// <inheritdoc/>
     public HttpVerbs Method { get; init; }
-
-    public override string ToString()
-    {
-        var jsonSerializerSettings = new HalJsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            Formatting = Formatting.Indented,
-            Converters =
-            [
-                new LinkConverter(),
-                new HttpVerbsConverter()
-            ],
-            ContractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new CamelCaseNamingStrategy()
-            }
-        };
-
-        return JsonConvert.SerializeObject(this, jsonSerializerSettings);
-    }
 }

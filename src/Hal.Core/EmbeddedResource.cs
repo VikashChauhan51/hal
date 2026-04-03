@@ -1,36 +1,20 @@
-﻿using Hal.Core.Converters;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System.Text.Json.Serialization;
+﻿namespace Hal.Core;
 
-namespace Hal.Core;
+/// <summary>
+/// Represents a resource that encapsulates an embedded value of a specified type.
+/// </summary>
+/// <typeparam name="T">The type of the value to be embedded within the resource.</typeparam>
 public class EmbeddedResource<T> : IEmbeddedResource<T>
 {
-    [JsonProperty("_embedded")]
-    [JsonPropertyName("_embedded")]
+    /// <inheritdoc/>
     public T Embedded { get; init; }
+
+    /// <summary>
+    /// Initializes a new instance of the EmbeddedResource class with the specified embedded resource.
+    /// </summary>
+    /// <param name="embedded">The resource to embed in this instance. Cannot be null.</param>
     public EmbeddedResource(T embedded)
     {
         Embedded = embedded;
-    }
-
-    public override string ToString()
-    {
-        var jsonSerializerSettings = new HalJsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            Formatting = Formatting.Indented,
-            Converters =
-            [
-                new LinkConverter(),
-                new ResourceConverter()
-            ],
-            ContractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new CamelCaseNamingStrategy()
-            }
-        };
-
-        return JsonConvert.SerializeObject(this, jsonSerializerSettings);
     }
 }
